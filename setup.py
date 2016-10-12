@@ -25,6 +25,7 @@ setup_args = {
                     'Programming Language :: Python :: 3.5'],
     'keywords': 'testutils testing automation prototyping utils utilities',
     'packages': find_packages(exclude=['contrib', 'docs', 'tests*']),
+    'install_requires': ['selenium>=2.53.0']
 }
 
 setup(**setup_args)
