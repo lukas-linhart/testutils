@@ -12,7 +12,23 @@ class WebDriverReanimator(object):
 
 
     def __enter__(self):
-        session_id = self._load_session_id(self.filename)
+        new_session_id = self.webdriver.session_id
+        saved_session_id = self._load_session_id(self.filename)
+        self.webdriver.session_id = saved_session_id
+        try:
+            # TODO: Come up with a more robust way
+            #       to validate session_id.
+            self.webdriver.find_element_by_xpath("//body")
+            logging.debug('loaded session_id is valid; ' \
+                    + 'throwing away newly opened browser')
+            self.webdriver.session_id = new_session_id
+            self.webdriver.close()
+            self.webdriver.session_id = saved_session_id
+            self.skip = True
+        except:
+            logging.debug('using new session_id')
+            self.webdriver.session_id = new_session_id
+            self.skip = False
         return self
 
 
@@ -24,9 +40,10 @@ class WebDriverReanimator(object):
         try:
             with open(filename) as f:
                 session_id = f.read()
+            logging.debug('loaded session_id: {}'.format(session_id))
         except IOError:
             session_id = None
-        logging.debug('loaded session_id: {}'.format(session_id))
+            logging.debug('failed to load session_id from file')
         return session_id
 
 
