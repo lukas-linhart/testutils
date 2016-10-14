@@ -4,7 +4,7 @@ long_description = 'handy utilities for testing and automation prototyping'
 
 setup_args = {
     'name': 'testutils',
-    'version': '0.1.1',
+    'version': '0.2.0',
     'description': 'testing and automation utilities',
     'long_description': long_description,
     'url': 'https://github.com/lukas-linhart/testutils',
