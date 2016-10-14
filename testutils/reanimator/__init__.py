@@ -1,12 +1,12 @@
 import logging
-from .default_webdriver import default_wd_func, default_wd_kwargs
+from .default_webdriver import default_wd_func, default_wd_args, default_wd_kwargs
 
 
 class WebDriverReanimator(object):
 
-    def __init__(self, wd_func=default_wd_func, wd_kwargs=default_wd_kwargs,
-            filename='session_id.txt'):
-        self.webdriver = wd_func(**wd_kwargs)
+    def __init__(self, wd_func=default_wd_func, wd_args=default_wd_args,
+            wd_kwargs=default_wd_kwargs, filename='session_id.txt'):
+        self.webdriver = wd_func(*wd_args, **wd_kwargs)
         logging.debug('Opened new browser with session_id "{}"'.format(
                 self.webdriver.session_id))
         self.filename = filename
